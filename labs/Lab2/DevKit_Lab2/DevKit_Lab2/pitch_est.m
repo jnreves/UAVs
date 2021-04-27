@@ -12,11 +12,20 @@ pitch_sim.G = 1;
 pitch_sim.H = 0; 
 pitch_sim.sys = ss(pitch_sim.A, [pitch_sim.B pitch_sim.G] ,pitch_sim.C, [pitch_sim.D pitch_sim.H] ) ;
 tf(pitch_sim.sys)
-
-for i = 1:3
-pitch_sim.Q = 0.00081; 
-%pitch_sim.R = pitch_sim.Q*2;
 pitch_sim.R = 25;
+
+d1_iter = 30;
+
+d1_high = 0.1;
+d1_low = 0.00000001;
+d1 = linspace(d1_low, d1_high, i);
+
+
+
+for i = 1:d1_iter
+pitch_sim.Q = d1(i); 
+%pitch_sim.R = pitch_sim.Q*2;
+
 
 Kest_pitch = kalman(pitch_sim.sys,pitch_sim.Q,pitch_sim.R);
 tf_pitch = tf(Kest_pitch);
@@ -27,7 +36,9 @@ sim('ARDroneReplay_V2_pitch');
 
 pitch_drone(i) = sim_pitch_drone;
 pitch_hat(i) = sim_pitch_hat;
-est_erros(i) = pitch_drone(i) - pitch_hat(i);
+est_erros = pitch_drone(i).Data - pitch_hat(i).Data;
+abs_est_erros = abs(est_erros);
+avg_error(i) = mean(abs_est_erros);
 
 figure(i)
 
@@ -36,3 +47,6 @@ hold on
 plot(pitch_hat(i));
 
 end
+
+figure()
+plot(d1, avg_error);

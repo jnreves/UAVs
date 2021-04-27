@@ -9,7 +9,7 @@
  *
  * Model version              : $Id: UAV_PIL.mdl 965 2013-03-21 01:08:53Z escobar $
  * Simulink Coder version : 9.3 (R2020a) 18-Nov-2019
- * C source code generated on : Tue Apr 13 14:49:41 2021
+ * C source code generated on : Sat Apr 24 15:17:38 2021
  *
  * Target selection: sldrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -861,21 +861,28 @@
 /* Block signals (default storage) */
 typedef struct {
   real_T TypeConversion;               /* '<S1>/Type Conversion' */
-  real_T TypeConversion13[3];          /* '<S1>/Type Conversion13' */
+  real_T TypeConversion15;             /* '<S1>/Type Conversion15' */
   real_T TypeConversion18;             /* '<S1>/Type Conversion18' */
+  real_T TypeConversion14;             /* '<S1>/Type Conversion14' */
+  real_T TypeConversion16;             /* '<S1>/Type Conversion16' */
+  real_T TypeConversion13[3];          /* '<S1>/Type Conversion13' */
   real_T TypeConversion4;              /* '<S1>/Type Conversion4' */
-  real_T Constant1[2];                 /* '<S5>/Constant1' */
-  real_T Integrator[2];                /* '<S5>/Integrator' */
+  real_T Constant1[2];                 /* '<S57>/Constant1' */
+  real_T Integrator[2];                /* '<S57>/Integrator' */
   real_T deg2rad[3];                   /* '<Root>/deg 2 rad' */
   real_T TypeConversion5;              /* '<S1>/Type Conversion5' */
   real_T TypeConversion6;              /* '<S1>/Type Conversion6' */
   real_T TypeConversion7;              /* '<S1>/Type Conversion7' */
   real_T TmpSignalConversionAtToWorkspaceInport1[9];
-  real_T deg2rad1;                     /* '<S3>/deg 2 rad1' */
+  real_T deg2rad1;                     /* '<S4>/deg 2 rad1' */
+  real_T TypeConversion12[3];          /* '<S1>/Type Conversion12' */
   real_T Clock;                        /* '<S1>/Clock' */
+  real_T X0;                           /* '<S2>/X0' */
+  real_T Add;                          /* '<S26>/Add' */
   real_T Clock1;                       /* '<Root>/Clock1' */
   real_T Vel_xy[2];
-           /* '<S5>/Velocity from vehicle body frame  to inertial NED  frame' */
+          /* '<S57>/Velocity from vehicle body frame  to inertial NED  frame' */
+  real_T Product3;                     /* '<S55>/Product3' */
 } B_ARDroneReplay_V2_T;
 
 /* Block states (default storage) for system '<Root>' */
@@ -896,23 +903,35 @@ typedef struct {
 
   struct {
     void *LoggedData;
-  } Heightm_PWORK;                     /* '<S3>/Height (m)' */
+  } Scope2_PWORK;                      /* '<Root>/Scope2' */
 
   struct {
     void *LoggedData;
-  } InertialpotitionalongXem_PWORK;  /* '<S3>/Inertial potition along Xe (m)' */
+  } Scope3_PWORK;                      /* '<Root>/Scope3' */
 
   struct {
     void *LoggedData;
-  } InertialpotitionalongYem_PWORK;  /* '<S3>/Inertial potition along Ye (m)' */
+  } Scope4_PWORK;                      /* '<Root>/Scope4' */
 
   struct {
     void *LoggedData;
-  } ToWorkspace_PWORK;                 /* '<S3>/To Workspace' */
+  } Heightm_PWORK;                     /* '<S4>/Height (m)' */
 
   struct {
     void *LoggedData;
-  } headingdeg_PWORK;                  /* '<S3>/heading (deg)' */
+  } InertialpotitionalongXem_PWORK;  /* '<S4>/Inertial potition along Xe (m)' */
+
+  struct {
+    void *LoggedData;
+  } InertialpotitionalongYem_PWORK;  /* '<S4>/Inertial potition along Ye (m)' */
+
+  struct {
+    void *LoggedData;
+  } ToWorkspace_PWORK;                 /* '<S4>/To Workspace' */
+
+  struct {
+    void *LoggedData;
+  } headingdeg_PWORK;                  /* '<S4>/heading (deg)' */
 
   struct {
     void *LoggedData;
@@ -922,22 +941,28 @@ typedef struct {
     int_T PrevIndex;
   } FromWorkspace_IWORK;               /* '<S1>/From Workspace' */
 
-  int_T Integrator_IWORK;              /* '<S5>/Integrator' */
+  int_T Integrator_IWORK;              /* '<S57>/Integrator' */
+  int_T MemoryX_IWORK;                 /* '<S2>/MemoryX' */
+  int8_T MeasurementUpdate_SubsysRanBC;/* '<S26>/MeasurementUpdate' */
+  boolean_T MeasurementUpdate_MODE;    /* '<S26>/MeasurementUpdate' */
 } DW_ARDroneReplay_V2_T;
 
 /* Continuous states (default storage) */
 typedef struct {
-  real_T Integrator_CSTATE[2];         /* '<S5>/Integrator' */
+  real_T Integrator_CSTATE[2];         /* '<S57>/Integrator' */
+  real_T MemoryX_CSTATE;               /* '<S2>/MemoryX' */
 } X_ARDroneReplay_V2_T;
 
 /* State derivatives (default storage) */
 typedef struct {
-  real_T Integrator_CSTATE[2];         /* '<S5>/Integrator' */
+  real_T Integrator_CSTATE[2];         /* '<S57>/Integrator' */
+  real_T MemoryX_CSTATE;               /* '<S2>/MemoryX' */
 } XDot_ARDroneReplay_V2_T;
 
 /* State disabled  */
 typedef struct {
-  boolean_T Integrator_CSTATE[2];      /* '<S5>/Integrator' */
+  boolean_T Integrator_CSTATE[2];      /* '<S57>/Integrator' */
+  boolean_T MemoryX_CSTATE;            /* '<S2>/MemoryX' */
 } XDis_ARDroneReplay_V2_T;
 
 #ifndef ODE1_INTG
@@ -966,14 +991,38 @@ typedef struct {
 
 /* Parameters (default storage) */
 struct P_ARDroneReplay_V2_T_ {
+  real_T Lykyhatkk1_Y0;                /* Expression: 0
+                                        * Referenced by: '<S55>/L*(y[k]-yhat[k|k-1])'
+                                        */
   real_T Constant1_Value[2];           /* Expression: [0 0]
-                                        * Referenced by: '<S5>/Constant1'
+                                        * Referenced by: '<S57>/Constant1'
                                         */
   real_T deg2rad_Gain;                 /* Expression: pi/180
                                         * Referenced by: '<Root>/deg 2 rad'
                                         */
   real_T deg2rad1_Gain;                /* Expression: 180/pi
-                                        * Referenced by: '<S3>/deg 2 rad1'
+                                        * Referenced by: '<S4>/deg 2 rad1'
+                                        */
+  real_T A_Value;                      /* Expression: pInitialization.A
+                                        * Referenced by: '<S2>/A'
+                                        */
+  real_T B_Value;                      /* Expression: pInitialization.B
+                                        * Referenced by: '<S2>/B'
+                                        */
+  real_T C_Value;                      /* Expression: pInitialization.C
+                                        * Referenced by: '<S2>/C'
+                                        */
+  real_T KalmanGainL_Value;            /* Expression: pInitialization.L
+                                        * Referenced by: '<S6>/KalmanGainL'
+                                        */
+  real_T D_Value;                      /* Expression: pInitialization.D
+                                        * Referenced by: '<S2>/D'
+                                        */
+  real_T X0_Value;                     /* Expression: pInitialization.X0
+                                        * Referenced by: '<S2>/X0'
+                                        */
+  boolean_T Enable_Value;              /* Expression: true()
+                                        * Referenced by: '<S2>/Enable'
                                         */
 };
 
@@ -1003,7 +1052,7 @@ struct tag_RTM_ARDroneReplay_V2_T {
   boolean_T zCCacheNeedsReset;
   boolean_T derivCacheNeedsReset;
   boolean_T CTOutputIncnstWithState;
-  real_T odeF[1][2];
+  real_T odeF[1][3];
   ODE1_IntgData intgData;
   void *dwork;
 
@@ -1129,10 +1178,62 @@ extern RT_MODEL_ARDroneReplay_V2_T *const ARDroneReplay_V2_M;
  *
  * '<Root>' : 'ARDroneReplay_V2'
  * '<S1>'   : 'ARDroneReplay_V2/ARDrone Replay Block'
- * '<S2>'   : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. '
- * '<S3>'   : 'ARDroneReplay_V2/Visualization of  Drone states'
- * '<S4>'   : 'ARDroneReplay_V2/ARDrone Replay Block/ARDrone data decoding'
- * '<S5>'   : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. /Position estimation'
- * '<S6>'   : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. /Position estimation/Velocity from vehicle body frame  to inertial NED  frame'
+ * '<S2>'   : 'ARDroneReplay_V2/Kalman Filter'
+ * '<S3>'   : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. '
+ * '<S4>'   : 'ARDroneReplay_V2/Visualization of  Drone states'
+ * '<S5>'   : 'ARDroneReplay_V2/ARDrone Replay Block/ARDrone data decoding'
+ * '<S6>'   : 'ARDroneReplay_V2/Kalman Filter/CalculatePL'
+ * '<S7>'   : 'ARDroneReplay_V2/Kalman Filter/CalculateYhat'
+ * '<S8>'   : 'ARDroneReplay_V2/Kalman Filter/CovarianceOutputConfigurator'
+ * '<S9>'   : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionA'
+ * '<S10>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionB'
+ * '<S11>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionC'
+ * '<S12>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionD'
+ * '<S13>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionEnable'
+ * '<S14>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionG'
+ * '<S15>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionH'
+ * '<S16>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionN'
+ * '<S17>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionP'
+ * '<S18>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionP0'
+ * '<S19>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionQ'
+ * '<S20>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionR'
+ * '<S21>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionReset'
+ * '<S22>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionX'
+ * '<S23>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionX0'
+ * '<S24>'  : 'ARDroneReplay_V2/Kalman Filter/DataTypeConversionu'
+ * '<S25>'  : 'ARDroneReplay_V2/Kalman Filter/MemoryP'
+ * '<S26>'  : 'ARDroneReplay_V2/Kalman Filter/Observer'
+ * '<S27>'  : 'ARDroneReplay_V2/Kalman Filter/ReducedQRN'
+ * '<S28>'  : 'ARDroneReplay_V2/Kalman Filter/Reset'
+ * '<S29>'  : 'ARDroneReplay_V2/Kalman Filter/Reshapeyhat'
+ * '<S30>'  : 'ARDroneReplay_V2/Kalman Filter/ScalarExpansionP0'
+ * '<S31>'  : 'ARDroneReplay_V2/Kalman Filter/ScalarExpansionQ'
+ * '<S32>'  : 'ARDroneReplay_V2/Kalman Filter/ScalarExpansionR'
+ * '<S33>'  : 'ARDroneReplay_V2/Kalman Filter/UseCurrentEstimator'
+ * '<S34>'  : 'ARDroneReplay_V2/Kalman Filter/checkA'
+ * '<S35>'  : 'ARDroneReplay_V2/Kalman Filter/checkB'
+ * '<S36>'  : 'ARDroneReplay_V2/Kalman Filter/checkC'
+ * '<S37>'  : 'ARDroneReplay_V2/Kalman Filter/checkD'
+ * '<S38>'  : 'ARDroneReplay_V2/Kalman Filter/checkEnable'
+ * '<S39>'  : 'ARDroneReplay_V2/Kalman Filter/checkG'
+ * '<S40>'  : 'ARDroneReplay_V2/Kalman Filter/checkH'
+ * '<S41>'  : 'ARDroneReplay_V2/Kalman Filter/checkN'
+ * '<S42>'  : 'ARDroneReplay_V2/Kalman Filter/checkP0'
+ * '<S43>'  : 'ARDroneReplay_V2/Kalman Filter/checkQ'
+ * '<S44>'  : 'ARDroneReplay_V2/Kalman Filter/checkR'
+ * '<S45>'  : 'ARDroneReplay_V2/Kalman Filter/checkReset'
+ * '<S46>'  : 'ARDroneReplay_V2/Kalman Filter/checkX0'
+ * '<S47>'  : 'ARDroneReplay_V2/Kalman Filter/checku'
+ * '<S48>'  : 'ARDroneReplay_V2/Kalman Filter/checky'
+ * '<S49>'  : 'ARDroneReplay_V2/Kalman Filter/CalculatePL/DataTypeConversionL'
+ * '<S50>'  : 'ARDroneReplay_V2/Kalman Filter/CalculatePL/DataTypeConversionM'
+ * '<S51>'  : 'ARDroneReplay_V2/Kalman Filter/CalculatePL/DataTypeConversionP'
+ * '<S52>'  : 'ARDroneReplay_V2/Kalman Filter/CalculatePL/DataTypeConversionZ'
+ * '<S53>'  : 'ARDroneReplay_V2/Kalman Filter/CalculatePL/Ground'
+ * '<S54>'  : 'ARDroneReplay_V2/Kalman Filter/CalculateYhat/Ground'
+ * '<S55>'  : 'ARDroneReplay_V2/Kalman Filter/Observer/MeasurementUpdate'
+ * '<S56>'  : 'ARDroneReplay_V2/Kalman Filter/ReducedQRN/Ground'
+ * '<S57>'  : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. /Position estimation'
+ * '<S58>'  : 'ARDroneReplay_V2/Position estimation Important:This block provides an  inaccurate extimation of position  based on  velocity information. /Position estimation/Velocity from vehicle body frame  to inertial NED  frame'
  */
 #endif                                 /* RTW_HEADER_ARDroneReplay_V2_h_ */

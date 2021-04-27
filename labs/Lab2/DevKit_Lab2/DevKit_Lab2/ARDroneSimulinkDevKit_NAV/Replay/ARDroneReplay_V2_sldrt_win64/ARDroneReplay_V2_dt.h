@@ -9,7 +9,7 @@
  *
  * Model version              : $Id: UAV_PIL.mdl 965 2013-03-21 01:08:53Z escobar $
  * Simulink Coder version : 9.3 (R2020a) 18-Nov-2019
- * C source code generated on : Tue Apr 13 14:49:41 2021
+ * C source code generated on : Sat Apr 24 15:17:38 2021
  *
  * Target selection: sldrt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -58,28 +58,34 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&ARDroneReplay_V2_B.TypeConversion), 0, 0, 30 }
+  { (char_T *)(&ARDroneReplay_V2_B.TypeConversion), 0, 0, 39 }
   ,
 
-  { (char_T *)(&ARDroneReplay_V2_DW.FromWorkspace_PWORK.TimePtr), 11, 0, 9 },
+  { (char_T *)(&ARDroneReplay_V2_DW.FromWorkspace_PWORK.TimePtr), 11, 0, 12 },
 
-  { (char_T *)(&ARDroneReplay_V2_DW.FromWorkspace_IWORK.PrevIndex), 10, 0, 2 }
+  { (char_T *)(&ARDroneReplay_V2_DW.FromWorkspace_IWORK.PrevIndex), 10, 0, 3 },
+
+  { (char_T *)(&ARDroneReplay_V2_DW.MeasurementUpdate_SubsysRanBC), 2, 0, 1 },
+
+  { (char_T *)(&ARDroneReplay_V2_DW.MeasurementUpdate_MODE), 8, 0, 1 }
 };
 
 /* data type transition table for block I/O structure */
 static DataTypeTransitionTable rtBTransTable = {
-  3U,
+  5U,
   rtBTransitions
 };
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&ARDroneReplay_V2_P.Constant1_Value[0]), 0, 0, 4 }
+  { (char_T *)(&ARDroneReplay_V2_P.Lykyhatkk1_Y0), 0, 0, 11 },
+
+  { (char_T *)(&ARDroneReplay_V2_P.Enable_Value), 8, 0, 1 }
 };
 
 /* data type transition table for Parameters structure */
 static DataTypeTransitionTable rtPTransTable = {
-  1U,
+  2U,
   rtPTransitions
 };
 

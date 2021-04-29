@@ -24,7 +24,7 @@ d1_low = 0.00000001;
 d1 = linspace(d1_low, d1_high, d1_iter);
 
 
-d2_iter = 5;
+d2_iter = 1;
 
 d2_high = 0.1;
 d2_low = 0.00000001;

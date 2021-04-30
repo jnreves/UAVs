@@ -1,4 +1,4 @@
-filename = 'EXP_B.mat';
+filename = 'EXP_C.mat';
 [altitude_real,raw,euler, phys_accs,phys_gyros,altitude_vision, altitude_vz,navdata] =trata_dados(filename);
 load(filename)
 addpath ARDroneSimulinkDevKit_NAV\lib 
@@ -10,23 +10,28 @@ pitch_bias_sim.C = [1 0];
 pitch_bias_sim.D = 0;
 pitch_bias_sim.G = eye(2);
 pitch_bias_sim.H = [0 0]; 
+pitch_bias_sim.R = 4.9843e-05;
 pitch_bias_sim.sys = ss(pitch_bias_sim.A, [pitch_bias_sim.B pitch_bias_sim.G] ,pitch_bias_sim.C, [pitch_bias_sim.D pitch_bias_sim.H] ) ;
 tf(pitch_bias_sim.sys)
+
 
 added_bias =0;
 exp_bias = 0.005;
 
 d1_iter = 1;
 
-d1_high = 0.1;
-d1_low = 0.00000001;
+% d1_high = 0.1;
+% d1_low = 0.00000001;
+d1_high = 1.621e-09;
+d1_low = 1.31e-09;
 
 d1 = linspace(d1_low, d1_high, d1_iter);
 
 
-d2_iter = 1;
 
-d2_high = 0.1;
+d2_iter = 5;
+
+d2_high = 0.0000001;
 d2_low = 0.00000001;
 d2 = linspace(d2_low, d2_high, d2_iter);
 
@@ -35,7 +40,6 @@ dims = combvec(d1, d2);
 for i = 1:(d1_iter*d2_iter)
 pitch_bias_sim.Q = [ dims(1) 0; 0 dims(2)]; 
 %pitch_bias_sim.R = pitch_bias_sim.Q*2;
-pitch_bias_sim.R = 25;
 
 Kest_pitch = kalman(pitch_bias_sim.sys,pitch_bias_sim.Q,pitch_bias_sim.R);
 tf_pitch = tf(Kest_pitch);
@@ -56,9 +60,9 @@ abs_est_error_bias = abs(est_error_bias);
 avg_error_bias(i) = mean(abs_est_error_bias);
 
 figure()
-plot(pitch_drone);
+plot(sim_pitch_hat.Time, pitch_drone);
 hold on
-plot(pitch_hat);
+plot(sim_pitch_hat.Time, pitch_hat);
 hold off
 legend('Real Pitch', 'Estimated Pitch')
 

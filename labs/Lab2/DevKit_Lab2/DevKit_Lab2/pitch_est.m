@@ -12,19 +12,18 @@ pitch_sim.G = 1;
 pitch_sim.H = 0; 
 pitch_sim.sys = ss(pitch_sim.A, [pitch_sim.B pitch_sim.G] ,pitch_sim.C, [pitch_sim.D pitch_sim.H] ) ;
 tf(pitch_sim.sys)
-pitch_sim.R = 25;
+pitch_sim.R = 4.9843e-05;
 
 d1_iter = 30;
 
-d1_high = 0.1;
-d1_low = 0.00000001;
-d1 = linspace(d1_low, d1_high, i);
+d1_high = 1.621e-09;
+d1_low = 1.31e-09;
+d1 = linspace(d1_low, d1_high, d1_iter);
 
-
-
+d1(1) = 1.482e-9;
 for i = 1:d1_iter
 pitch_sim.Q = d1(i); 
-%pitch_sim.R = pitch_sim.Q*2;
+
 
 
 Kest_pitch = kalman(pitch_sim.sys,pitch_sim.Q,pitch_sim.R);
